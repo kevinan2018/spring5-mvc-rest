@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class CustomerDTO {
-    private Long id;
 
     @JsonProperty("firstname")
     private String firstName;

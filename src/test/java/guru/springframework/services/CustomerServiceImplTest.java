@@ -2,6 +2,7 @@ package guru.springframework.services;
 
 import guru.springframework.api.v1.mapper.CustomerMapper;
 import guru.springframework.api.v1.model.CustomerDTO;
+import guru.springframework.controllers.v1.CustomerController;
 import guru.springframework.domain.Customer;
 import guru.springframework.repositories.CustomerRepository;
 import org.junit.Before;
@@ -22,7 +23,7 @@ import static org.mockito.Mockito.when;
 
 public class CustomerServiceImplTest {
 
-    private static final String CUST_URL = "/api/v1/customers/";
+    private static final String CUST_URL = CustomerController.BASE_URL + "/";
 
     @Mock
     CustomerRepository customerRepository;
@@ -98,6 +99,28 @@ public class CustomerServiceImplTest {
         assertEquals(customerDTO.getFirstName(), savedDto.getFirstName());
         assertEquals(CUST_URL + "1", savedDto.getCustomer_Url());
 
+    }
+
+    @Test
+    public void PatchCustomer() {
+        //given
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName("Joe");
+
+        Customer savedCustomer = new Customer();
+        savedCustomer.setFirstName(customerDTO.getFirstName());
+        savedCustomer.setLastName(customerDTO.getLastName());
+        savedCustomer.setId(1L);
+
+        when(customerRepository.findById(anyLong())).thenReturn(Optional.ofNullable(savedCustomer));
+        when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
+
+        //when
+        CustomerDTO savedDto = customerService.patchCustomer(1L, customerDTO);
+
+        //then
+        assertEquals(savedDto.getFirstName(), customerDTO.getFirstName());
+        assertEquals(savedDto.getCustomer_Url(), CUST_URL + "1");
     }
 
     @Test
