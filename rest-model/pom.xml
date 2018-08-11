@@ -15,5 +15,35 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <!--<dependencies></dependencies>-->
+    <dependencies>
+        <!--
+        You need the JAXB API to be able to annotate your classes.
+        However, starting with Java 6 that API is included in the
+        Java SE platform so there is no need to declare a dependency.
+        -->
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>${jaxb2.project.version}</version>
+                <executions>
+                    <execution>
+                        <id>xjc</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- The package of your generated sources -->
+                    <packageName>guru.springframework.model</packageName>
+                    <sources>
+                        <source>src/main/resources/xsd</source>
+                    </sources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -27,6 +27,7 @@
         <mapstruct_defaultComponentModel>spring</mapstruct_defaultComponentModel>
         <jacoco.version>0.7.5.201505241946</jacoco.version>
         <springfox-swagger.version>2.7.0</springfox-swagger.version>
+        <jaxb2.project.version>2.3.1</jaxb2.project.version>
     </properties>
 
     <modules>
