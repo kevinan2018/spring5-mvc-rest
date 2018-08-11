@@ -66,6 +66,7 @@ public class VendorControllerTest {
         given(vendorService.getAllVendors()).willReturn(new VendorListDTO(Arrays.asList(vendorDTO_1, vendorDTO_2)));
 
         mockMvc.perform(get(VEND_URL)
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.vendors", hasSize(2)));
@@ -77,6 +78,7 @@ public class VendorControllerTest {
         given(vendorService.getVendorById(anyLong())).willReturn(vendorDTO_1);
 
         mockMvc.perform(get(VEND_URL + "1")
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", equalTo(vendorDTO_1.getName())));
@@ -89,8 +91,9 @@ public class VendorControllerTest {
         given(vendorService.createNewVendor(any(VendorDTO.class))).willReturn(vendorDTO_1);
 
         mockMvc.perform(post(VEND_URL)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(asJsonString(vendorDTO_1)))
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(vendorDTO_1)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", equalTo(vendorDTO_1.getName())))
                 .andExpect(jsonPath("$.vendor_url", equalTo(vendorDTO_1.getVendorUrl())));
@@ -102,6 +105,7 @@ public class VendorControllerTest {
         given(vendorService.saveVendorByDTO(anyLong(), any(VendorDTO.class))).willReturn(vendorDTO_1);
 
         mockMvc.perform(put(VEND_URL + "1")
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(vendorDTO_1)))
                 .andExpect(status().isOk())
@@ -116,8 +120,9 @@ public class VendorControllerTest {
         given(vendorService.patchVendor(anyLong(), any(VendorDTO.class))).willReturn(vendorDTO_1);
 
         mockMvc.perform(patch(VEND_URL + "1")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(asJsonString(vendorDTO_1)))
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(vendorDTO_1)))
                 .andExpect(jsonPath("$.name", equalTo(vendorDTO_1.getName())))
                 .andExpect(jsonPath("$.vendor_url", equalTo(vendorDTO_1.getVendorUrl())));
     }
