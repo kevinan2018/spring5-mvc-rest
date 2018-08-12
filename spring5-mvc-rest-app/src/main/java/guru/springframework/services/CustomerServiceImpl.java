@@ -1,7 +1,8 @@
 package guru.springframework.services;
 
 import guru.springframework.api.v1.mapper.CustomerMapper;
-import guru.springframework.api.v1.model.CustomerDTO;
+//import guru.springframework.api.v1.model.CustomerDTO;
+import guru.springframework.model.CustomerDTO;
 import guru.springframework.controllers.v1.CustomerController;
 import guru.springframework.domain.Customer;
 import guru.springframework.repositories.CustomerRepository;
@@ -27,7 +28,8 @@ public class CustomerServiceImpl implements CustomerService {
                 .stream()
                 .map(customer -> {
                   CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
-                  customerDTO.setCustomer_Url(getCustomerUrl(customer.getId()));
+                  //customerDTO.setCustomer_Url(getCustomerUrl(customer.getId()));
+                  customerDTO.setCustomerUrl(getCustomerUrl(customer.getId()));
                   return customerDTO;
                 })
                 .collect(Collectors.toList());
@@ -38,7 +40,8 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findById(id)
                 .map(customer -> {
                     CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
-                    customerDTO.setCustomer_Url(getCustomerUrl(id));
+                    //customerDTO.setCustomer_Url(getCustomerUrl(id));
+                    customerDTO.setCustomerUrl(getCustomerUrl(id));
                     return customerDTO;
                 })
                 .orElseThrow(ResourceNotFoundException::new);
@@ -55,7 +58,8 @@ public class CustomerServiceImpl implements CustomerService {
         //customer updated by repository
         Customer savedCustomer = customerRepository.save(customer);
         CustomerDTO retDto = customerMapper.customerToCustomerDTO(savedCustomer);
-        retDto.setCustomer_Url(getCustomerUrl(savedCustomer.getId()));
+        //retDto.setCustomer_Url(getCustomerUrl(savedCustomer.getId()));
+        retDto.setCustomerUrl(getCustomerUrl(savedCustomer.getId()));
         return retDto;
     }
 
@@ -71,12 +75,12 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO patchCustomer(Long id, CustomerDTO customerDTO) {
         return customerRepository.findById(id).map(customer -> {
 
-            if (customerDTO.getFirstName() != null) {
-                customer.setFirstName(customerDTO.getFirstName());
+            if (customerDTO.getFirstname() != null) {
+                customer.setFirstName(customerDTO.getFirstname());
             }
 
-            if (customerDTO.getLastName() != null) {
-                customer.setLastName(customerDTO.getLastName());
+            if (customerDTO.getLastname() != null) {
+                customer.setLastName(customerDTO.getLastname());
             }
 
 

@@ -6,10 +6,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+//@Data
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class CustomerListDTO {
 
-    private List<CustomerDTO> customers;
+//    private List<CustomerDTO> customers;
 }

@@ -1,7 +1,8 @@
 package guru.springframework.services;
 
 import guru.springframework.api.v1.mapper.CustomerMapper;
-import guru.springframework.api.v1.model.CustomerDTO;
+//import guru.springframework.api.v1.model.CustomerDTO;
+import guru.springframework.model.CustomerDTO;
 import guru.springframework.bootstrap.Bootstrap;
 import guru.springframework.domain.Customer;
 import guru.springframework.repositories.CategoryRepository;
@@ -58,7 +59,7 @@ public class CustomerServiceImplIT {
         String origLastname = originalCustomer.getLastName();
 
         CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setFirstName(updateName);
+        customerDTO.setFirstname(updateName);
 
         //when
         customerService.patchCustomer(id, customerDTO);
@@ -82,7 +83,7 @@ public class CustomerServiceImplIT {
         String origLastname = originalCustomer.getLastName();
 
         CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setLastName(updateName);
+        customerDTO.setLastname(updateName);
 
         //when
         customerService.patchCustomer(id, customerDTO);

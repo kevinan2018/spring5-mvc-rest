@@ -1,6 +1,7 @@
 package guru.springframework.controllers.v1;
 
-import guru.springframework.api.v1.model.CustomerDTO;
+//import guru.springframework.api.v1.model.CustomerDTO;
+import guru.springframework.model.CustomerDTO;
 import guru.springframework.services.CustomerService;
 import guru.springframework.services.ResourceNotFoundException;
 import org.junit.Before;
@@ -66,7 +67,7 @@ public class CustomerControllerTest {
     @Test
     public void getCustomerById() throws Exception{
         CustomerDTO customer = new CustomerDTO();
-        customer.setFirstName("Joe");
+        customer.setFirstname("Joe");
 
         when(customerService.getCustomerById(anyLong())).thenReturn(customer);
 
@@ -81,15 +82,15 @@ public class CustomerControllerTest {
     public void createNewCustomer() throws Exception{
         //given
         CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setFirstName("Joe");
-        customerDTO.setLastName("Smith");
+        customerDTO.setFirstname("Joe");
+        customerDTO.setLastname("Smith");
 
         CustomerDTO savedDTO = new CustomerDTO();
-        savedDTO.setFirstName(customerDTO.getFirstName());
-        savedDTO.setLastName(customerDTO.getLastName());
-        savedDTO.setCustomer_Url(CustomerController.BASE_URL + "/1");
+        savedDTO.setFirstname(customerDTO.getFirstname());
+        savedDTO.setLastname(customerDTO.getLastname());
+        savedDTO.setCustomerUrl(CustomerController.BASE_URL + "/1");
 
-        when(customerService.createNewCustomer(customerDTO)).thenReturn(savedDTO);
+        when(customerService.createNewCustomer(any(CustomerDTO.class))).thenReturn(savedDTO);
 
         //when/then
         mockMvc.perform(post(CustomerController.BASE_URL)
@@ -98,7 +99,7 @@ public class CustomerControllerTest {
                 .content(asJsonString(customerDTO)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.firstname", equalTo("Joe")))
-                .andExpect(jsonPath("$.customer_url", equalTo(CustomerController.BASE_URL + "/1")));
+                .andExpect(jsonPath("$.customerUrl", equalTo(CustomerController.BASE_URL + "/1")));
 
     }
 
@@ -107,13 +108,13 @@ public class CustomerControllerTest {
     public void updateCustomer() throws Exception {
         //given
         CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setFirstName("Fred");
-        customerDTO.setLastName("Flintstone");
+        customerDTO.setFirstname("Fred");
+        customerDTO.setLastname("Flintstone");
 
         CustomerDTO retDto = new CustomerDTO();
-        retDto.setFirstName(customerDTO.getFirstName());
-        retDto.setLastName(customerDTO.getLastName());
-        retDto.setCustomer_Url(CustomerController.BASE_URL + "/1");
+        retDto.setFirstname(customerDTO.getFirstname());
+        retDto.setLastname(customerDTO.getLastname());
+        retDto.setCustomerUrl(CustomerController.BASE_URL + "/1");
 
         when(customerService.saveCustomerByDTO(anyLong(), any(CustomerDTO.class))).thenReturn(retDto);
 
@@ -125,19 +126,19 @@ public class CustomerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstname", equalTo("Fred")))
                 .andExpect(jsonPath("$.lastname", equalTo("Flintstone")))
-                .andExpect(jsonPath("$.customer_url", equalTo(CustomerController.BASE_URL + "/1")));
+                .andExpect(jsonPath("$.customerUrl", equalTo(CustomerController.BASE_URL + "/1")));
     }
 
     @Test
     public void patchCustomer() throws Exception {
         //given
         CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setFirstName("Fred");
+        customerDTO.setFirstname("Fred");
 
         CustomerDTO retDto = new CustomerDTO();
-        retDto.setFirstName(customerDTO.getFirstName());
-        retDto.setLastName("Flintston");
-        retDto.setCustomer_Url(CustomerController.BASE_URL + "/1");
+        retDto.setFirstname(customerDTO.getFirstname());
+        retDto.setLastname("Flintston");
+        retDto.setCustomerUrl(CustomerController.BASE_URL + "/1");
 
         when(customerService.patchCustomer(anyLong(), any(CustomerDTO.class))).thenReturn(retDto);
 
@@ -148,7 +149,7 @@ public class CustomerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstname", equalTo("Fred")))
                 .andExpect(jsonPath("$.lastname", equalTo("Flintston")))
-                .andExpect(jsonPath("$.customer_url", equalTo(CustomerController.BASE_URL + "/1")));
+                .andExpect(jsonPath("$.customerUrl", equalTo(CustomerController.BASE_URL + "/1")));
     }
 
     @Test

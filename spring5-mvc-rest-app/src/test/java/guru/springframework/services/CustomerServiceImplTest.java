@@ -1,7 +1,8 @@
 package guru.springframework.services;
 
 import guru.springframework.api.v1.mapper.CustomerMapper;
-import guru.springframework.api.v1.model.CustomerDTO;
+//import guru.springframework.api.v1.model.CustomerDTO;
+import guru.springframework.model.CustomerDTO;
 import guru.springframework.controllers.v1.CustomerController;
 import guru.springframework.domain.Customer;
 import guru.springframework.repositories.CustomerRepository;
@@ -75,7 +76,7 @@ public class CustomerServiceImplTest {
         CustomerDTO customerDTO = customerService.getCustomerById(1L);
 
         //then
-        assertEquals("Michael", customerDTO.getFirstName());
+        assertEquals("Michael", customerDTO.getFirstname());
     }
 
 
@@ -83,11 +84,11 @@ public class CustomerServiceImplTest {
     public void createNewCustomer() {
         //given
         CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setFirstName("Joe");
+        customerDTO.setFirstname("Joe");
 
         Customer savedCustomer = new Customer();
-        savedCustomer.setFirstName(customerDTO.getFirstName());
-        savedCustomer.setLastName(customerDTO.getLastName());
+        savedCustomer.setFirstName(customerDTO.getFirstname());
+        savedCustomer.setLastName(customerDTO.getLastname());
         savedCustomer.setId(1L);
 
         when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
@@ -96,8 +97,8 @@ public class CustomerServiceImplTest {
         CustomerDTO savedDto = customerService.createNewCustomer(customerDTO);
 
         //then
-        assertEquals(customerDTO.getFirstName(), savedDto.getFirstName());
-        assertEquals(CUST_URL + "1", savedDto.getCustomer_Url());
+        assertEquals(customerDTO.getFirstname(), savedDto.getFirstname());
+        assertEquals(CUST_URL + "1", savedDto.getCustomerUrl());
 
     }
 
@@ -105,11 +106,11 @@ public class CustomerServiceImplTest {
     public void PatchCustomer() {
         //given
         CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setFirstName("Joe");
+        customerDTO.setFirstname("Joe");
 
         Customer savedCustomer = new Customer();
-        savedCustomer.setFirstName(customerDTO.getFirstName());
-        savedCustomer.setLastName(customerDTO.getLastName());
+        savedCustomer.setFirstName(customerDTO.getFirstname());
+        savedCustomer.setLastName(customerDTO.getLastname());
         savedCustomer.setId(1L);
 
         when(customerRepository.findById(anyLong())).thenReturn(Optional.ofNullable(savedCustomer));
@@ -119,19 +120,19 @@ public class CustomerServiceImplTest {
         CustomerDTO savedDto = customerService.patchCustomer(1L, customerDTO);
 
         //then
-        assertEquals(savedDto.getFirstName(), customerDTO.getFirstName());
-        assertEquals(savedDto.getCustomer_Url(), CUST_URL + "1");
+        assertEquals(savedDto.getFirstname(), customerDTO.getFirstname());
+        assertEquals(savedDto.getCustomerUrl(), CUST_URL + "1");
     }
 
     @Test
     public void saveCustomerByDTO() {
         //given
         CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setFirstName("Joe");
+        customerDTO.setFirstname("Joe");
 
         Customer savedCustomer = new Customer();
-        savedCustomer.setFirstName(customerDTO.getFirstName());
-        savedCustomer.setLastName(customerDTO.getLastName());
+        savedCustomer.setFirstName(customerDTO.getFirstname());
+        savedCustomer.setLastName(customerDTO.getLastname());
         savedCustomer.setId(1L);
 
         when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
@@ -140,8 +141,8 @@ public class CustomerServiceImplTest {
         CustomerDTO savedDto = customerService.saveCustomerByDTO(1L, customerDTO);
 
         //then
-        assertEquals(customerDTO.getFirstName(), savedDto.getFirstName());
-        assertEquals(CUST_URL+"1", savedDto.getCustomer_Url());
+        assertEquals(customerDTO.getFirstname(), savedDto.getFirstname());
+        assertEquals(CUST_URL+"1", savedDto.getCustomerUrl());
     }
 
     @Test
